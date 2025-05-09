@@ -1,0 +1,19 @@
+{
+  "name": "fso-phonebookbackend",
+  "version": "0.1.1",
+  "description": "Full Stack Open course exercise phonebook backend app. (part3)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gudkat/FSO-phonebookbackend.git"
+  },
+  "author": "Me",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gudkat/FSO-phonebookbackend/issues"
+  },
+  "homepage": "https://github.com/Gudkat/FSO-phonebookbackend#readme"
+}
