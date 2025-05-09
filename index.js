@@ -26,6 +26,7 @@ let persons = [
         }
     ]
 
+app.use(express.static('dist')) 
 app.use(express.json())
 
 morgan.token('content', (reqest, response) => JSON.stringify(reqest.body))
@@ -35,7 +36,7 @@ app.get('/api/persons', (request, response) => {
   response.json(persons)
 })
 
-app.get('/info', (request, response) => {
+app.get('api/info', (request, response) => {
   const date = new Date()
   const info = `<p>Phonebook has info for ${persons.length} people</p><p>${date}</p>`
   response.send(info)
