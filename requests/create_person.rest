@@ -1,0 +1,41 @@
+POST http://localhost:3001/api/persons 
+Content-Type: application/json
+
+{
+  "name": "randomguy",
+  "number": "000-123-123"
+}
+
+### 
+POST http://localhost:3001/api/persons 
+Content-Type: application/json
+
+{
+  "number": "000-123-123"
+}
+
+###
+POST http://localhost:3001/api/persons 
+Content-Type: application/json
+
+{
+  "name": "",
+  "number": "000-123-123"
+}
+
+###
+POST http://localhost:3001/api/persons 
+Content-Type: application/json
+
+{
+  "name": "randomlady"
+}
+
+###
+POST http://localhost:3001/api/persons 
+Content-Type: application/json
+
+{
+  "name": "randomgirl",
+  "number": ""
+}

@@ -4,6 +4,8 @@
   "description": "Full Stack Open course exercise phonebook backend app. (part3)",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +17,9 @@
   "bugs": {
     "url": "https://github.com/Gudkat/FSO-phonebookbackend/issues"
   },
-  "homepage": "https://github.com/Gudkat/FSO-phonebookbackend#readme"
+  "homepage": "https://github.com/Gudkat/FSO-phonebookbackend#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "morgan": "^1.10.0"
+  }
 }
