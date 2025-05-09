@@ -39,3 +39,14 @@ Content-Type: application/json
   "name": "randomgirl",
   "number": ""
 }
+
+###
+# test for online app api
+POST https://fso-phonebookbackend.onrender.com/api/persons 
+Content-Type: application/json
+
+{
+  "name": "randomguy",
+  "number": "000-123-123"
+}
+
