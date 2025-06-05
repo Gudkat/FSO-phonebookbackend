@@ -57,7 +57,7 @@ app.delete('/api/persons/:id', (request, response, next) => {
   .then((result) => {
     response.status(204).end()
     // The example program didn't have any error handling for the corresponding method so I assume it was not required. If it was I'm not sure what was. 
-    // the .catch((error) => next(error)) at least doesn't do anything
+    // the .catch((error) => next(error)) at least doesn't seem to do anything
   })
   // .catch((error) => next(error))
 })
