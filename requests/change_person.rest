@@ -1,0 +1,8 @@
+PUT http://localhost:3001/api/persons/68419e3d755fa7148775d49f
+Content-Type: application/json
+
+{
+  "name": "Ada Lovelace",
+  "number": "000-123-123",
+  "id": "68419e3d755fa7148775d49f"
+}
