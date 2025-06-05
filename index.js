@@ -1,32 +1,10 @@
+require('dotenv').config
 const express = require('express')
+const PhonebookEntry = require('./models/phonebookEntry')
 const app = express()
 const morgan = require('morgan')
-// var?
 
-let persons = [
-        { 
-          "id": "1",
-          "name": "Arto Hellas", 
-          "number": "040-123456"
-        },
-        { 
-          "id": "2",
-          "name": "Ada Lovelace", 
-          "number": "39-44-5323523"
-        },
-        { 
-          "id": "3",
-          "name": "Dan Abramov", 
-          "number": "12-43-234345"
-        },
-        { 
-          "id": "4",
-          "name": "Mary Poppendieck", 
-          "number": "39-23-6423122"
-        }
-    ]
-
-    
+  
 app.use(express.json())
 app.use(express.static('dist')) 
 
@@ -34,7 +12,9 @@ morgan.token('content', (reqest, response) => JSON.stringify(reqest.body))
 app.use(morgan(':method :url :status :res[content-length] :response-time ms :content'))
 
 app.get('/api/persons', (request, response) => {
-  response.json(persons)
+  PhonebookEntry.find({}).then((results) =>
+    response.json(results)
+  )
 })
 
 app.get('api/info', (request, response) => {
@@ -45,66 +25,60 @@ app.get('api/info', (request, response) => {
 
 app.get('/api/persons/:id', (request, response) => {
   const id = request.params.id
-  const person = persons.find((person) => person.id === id)
-
-  if (person) {
+  PhonebookEntry.findById(id)
+  .then((person) => {
+    if (!person) {
+      return response.status(204).end()
+    }
     response.json(person)
-  } else {
-    response.status(404).end()
-  }
+  })
 })
 
 app.delete('/api/persons/:id', (request, response) => {
   const id = request.params.id
-  persons = persons.filter((note) => note.id !== id)
-
-  response.status(204).end()
+  console.log(id)
+  PhonebookEntry.findByIdAndDelete(id)
+  .then((result) => {
+    response.status(204).end()
+  })
+  .catch((error) => console.error(error.message))
 })
 
 app.post('/api/persons', (request, response) => {
-
-  const id = getRandomIntInclusive(1, 10000)
   const body = request.body
+  PhonebookEntry.find({}).then(persons => {
 
-
-  if (!body.name || body.name.trim() === '') {
-    return response.status(400).json({
-      error: 'name is missing'
+    
+    if (!body.name || body.name.trim() === '') {
+      return response.status(400).json({
+        error: 'name is missing'
+      })
+    }
+    
+    if (!body.number || body.number.trim() === '') {
+      return response.status(400).json({
+        error: 'number is missing'
+      })
+    }
+    
+    const nameAlreadyUsed = persons.find((person) => person.name === body.name)
+    
+    if (nameAlreadyUsed) {
+      return response.status(400).json({
+        error: 'name must be unique'
+      })
+    }
+    
+    const pbEntry = new PhonebookEntry({
+      name: body.name,
+      number: body.number,
     })
-  }
-
-  if (!body.number || body.number.trim() === '') {
-    return response.status(400).json({
-      error: 'number is missing'
+    
+    pbEntry.save().then((newEntry) => {
+      response.json(newEntry)
     })
-  }
-
-  const nameAlreadyUsed = persons.find((person) => person.name === body.name)
-
-  if (nameAlreadyUsed) {
-    return response.status(400).json({
-      error: 'name must be unique'
-    })
-  }
-
-
-  const person = {
-    name: body.name,
-    number: body.number,
-    id: id
-  }
-
-  persons = persons.concat(person)
-
-  response.json(person)
+  })
 })
-
-const getRandomIntInclusive = (min, max) => {
-  const minCeiled = Math.ceil(min);
-  const maxFloored = Math.floor(max);
-  return Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled).toString(); 
-  // based on https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
-}
 
 
 const PORT = process.env.PORT || 3001
